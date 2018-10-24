@@ -19,4 +19,4 @@ This is a simple **preprocessing** tool to merge individual **gene count files**
     *   Use our **Seurat Wizard** to carry out single-cell RNA analysis
     *   Use **DESeq2** or **START** apps to carry out bulk RNA analysis
 
-![alt text](screenshots/mergeScreenshot.png "Input Data")
+![alt text](mergeScreenshot.png "Input Data")
