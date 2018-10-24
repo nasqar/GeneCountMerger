@@ -1,10 +1,6 @@
 # GeneCountMerger
-A preprocessing tool to merge gene count files
 
-
-<div class="well">
-
-This is a simple preprocessing tool to merge individual gene count files (Eg. output count files from htseq)
+This is a simple **preprocessing** tool to merge individual **gene count files** (Eg. output count files from htseq)
 
 **NOTE:** first column must contain the genes. If the gene columns do not match in all files, this tool will not work
 
@@ -23,4 +19,4 @@ This is a simple preprocessing tool to merge individual gene count files (Eg. ou
     *   Use our **Seurat Wizard** to carry out single-cell RNA analysis
     *   Use **DESeq2** or **START** apps to carry out bulk RNA analysis
 
-</div>
+![alt text](screenshots/mergeScreenshot.png "Input Data")
