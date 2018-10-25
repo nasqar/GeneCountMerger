@@ -12,7 +12,7 @@ library(shinyBS)
 library(parallel)
 library(shinyjs)
 library(sodium)
-
+library(uuid)
 
 
 ui <- tagList(
@@ -494,7 +494,7 @@ server <- function(input, output,session) {
                     if(input$addOne)
                       total[,!(names(total) %in% c("gene.ids","gene.names"))] = total[,!(names(total) %in% c("gene.ids","gene.names"))] + 1
                     
-                    myValues$fileUrl = uuid::UUIDgenerate()
+                    myValues$fileUrl = UUIDgenerate()
                     myValues$fileUrl = paste0(tempdir(),'/',myValues$fileUrl,'.csv')
                     
                     updateTabsetPanel(session, "tabs", selected = "Output")
