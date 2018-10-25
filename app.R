@@ -4,6 +4,11 @@ library(parallel)
 library(shinyjs)
 library(sodium)
 
+
+list.of.packages <- c("shiny", "shinyBS","parallel","shinyjs","sodium")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
 ui <- tagList(
   tags$head(
     tags$style(HTML(" .shiny-output-error-validation {color: darkred; } ")),
