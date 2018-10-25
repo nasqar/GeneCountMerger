@@ -369,7 +369,7 @@ server <- function(input, output,session) {
                       p(strong("Bulk RNA")),
                         a("DESeq2", href=paste0("/deseq2shiny?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;"),
                         hr(),
-                        a("START", href=paste0("/STARTApp?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;")
+                        a("START", href=paste0("/STARTapp?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;")
                    
                       
              )
