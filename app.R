@@ -1,3 +1,13 @@
+# Installl missing packages
+list.of.packages <- c("shiny", "shinyBS","parallel","shinyjs","sodium")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) 
+{
+  browser()
+  install.packages(new.packages)
+}
+
+
 library(shiny)
 library(shinyBS)
 library(parallel)
@@ -5,9 +15,6 @@ library(shinyjs)
 library(sodium)
 
 
-list.of.packages <- c("shiny", "shinyBS","parallel","shinyjs","sodium")
-new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
 
 ui <- tagList(
   tags$head(
