@@ -360,16 +360,16 @@ server <- function(input, output,session) {
              
              tags$div(class = "BoxArea3", style = "text-align: center;",
                       p(strong("Single-Cell RNA")),
-                      a("Seurat Wizard", href=paste0("http://127.0.0.1:1234/?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;")
+                      a("Seurat Wizard", href=paste0("/SeuratWizard?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;")
                       ) 
              ),
       column(6, 
              
              tags$div(class = "BoxArea3", style = "text-align: center;",
                       p(strong("Bulk RNA")),
-                        a("DESeq2", href=paste0("http://127.0.0.1:6076/?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;"),
+                        a("DESeq2", href=paste0("/deseq2shiny?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;"),
                         hr(),
-                        a("START", href=paste0("http://127.0.0.1:6515/?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;")
+                        a("START", href=paste0("/STARTApp?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;")
                    
                       
              )
