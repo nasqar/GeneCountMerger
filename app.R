@@ -1,5 +1,5 @@
 # Installl missing packages
-list.of.packages <- c("shiny", "shinyBS","parallel","shinyjs","sodium")
+list.of.packages <- c("shiny", "shinyBS","parallel","shinyjs","sodium","uuid")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) 
 {
