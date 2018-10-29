@@ -13,6 +13,7 @@ library(parallel)
 library(shinyjs)
 library(sodium)
 library(uuid)
+library(readr)
 
 
 ui <- tagList(
@@ -369,7 +370,7 @@ server <- function(input, output,session) {
                       p(strong("Bulk RNA")),
                         a("DESeq2", href=paste0("/deseq2shiny?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;"),
                         hr(),
-                        a("START", href=paste0("/STARTapp?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;")
+                        a("START", href=paste0("/tsar_nasqar?countsdata=", encryptUrlParam(myValues$startAppFileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;")
                    
                       
              )
@@ -381,7 +382,7 @@ server <- function(input, output,session) {
   
   encryptUrlParam = function (paramStr)
   {
-    pubkeyHex <- readr::read_file("public.txt") #"42b3781d6907cd426b9c05cac7155cce15bb9385a602716f619529485dab6c28"
+    pubkeyHex <- read_file("public.txt")
     pubkey = hex2bin(pubkeyHex)
     
     msg <- serialize(paramStr, NULL)
@@ -509,6 +510,39 @@ server <- function(input, output,session) {
   },
   {
     write.csv(myValues$mergedData, myValues$fileUrl, row.names = F)
+    
+    
+    # this is specific to STARTapp. need to add _1 when no replicates are present
+    myValues$startAppFileUrl = gsub("\\.csv","_startapp.csv",myValues$fileUrl)
+    
+    mergedCountsOnly = myValues$mergedData[,-1]
+    countsColStartIndex = 2
+    if(class(mergedCountsOnly[,1]) != 'integer')
+    {  
+      mergedCountsOnly = mergedCountsOnly[,-1]
+      countsColStartIndex = 3
+    }
+    
+    mergedColNames = colnames(mergedCountsOnly)
+    
+    containsUnderscoreReplNum= grepl('_[0-9]+$',mergedColNames)
+    if(!all(containsUnderscoreReplNum))
+    {
+      #remove all underscores if present
+      mergedColNames = gsub("_","",mergedColNames)
+      
+      #add underscore 1
+      mergedColNames = paste0(mergedColNames, "_1")
+      
+      startappMergedDf = myValues$mergedData
+      colnames(startappMergedDf)[seq(countsColStartIndex,ncol(startappMergedDf))] = mergedColNames
+      
+      browser()
+      write.csv(startappMergedDf, myValues$startAppFileUrl, row.names = F)
+    }
+    else
+      write.csv(myValues$mergedData, myValues$startAppFileUrl, row.names = F)
+    
   })
   
   multmerge = function(inFiles,sep, isMultiple){
