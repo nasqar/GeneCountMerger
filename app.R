@@ -63,7 +63,7 @@ ui <- tagList(
                                                                              'Other (not listed)'
                                                                            ),selected = "Homo_sapiens.GRCh38.81"),
                                                                conditionalPanel("input.refGenome=='Other (not listed)'",
-                                                                                a(href="","Click here if you have a .gtf file for your genome", target="_blank"),
+                                                                                a(href="https://github.com/nasqar/GeneidToNameFromGtf","Click here if you have a .gtf file for your genome", target="_blank"),
                                                                                 fileInput('gtfMappingFile', 'Upload gene/id lookup table (.csv)',
                                                                                           accept=c('text/csv', 
                                                                                                    'text/comma-separated-values,text/plain', 
@@ -109,7 +109,7 @@ ui <- tagList(
                                      tags$li(strong("Convert ensembl gene IDs to gene names"),
                                              tags$ul(
                                                tags$li("Option to choose from available genome/versions"),
-                                               tags$li("If genome/version is not available in the options and you have a ",a(target = "_blank",href="https://asia.ensembl.org/info/website/upload/gff.html",".gtf")," file for your genome", a(href="","follow these instructions."))
+                                               tags$li("If genome/version is not available in the options and you have a ",a(target = "_blank",href="https://asia.ensembl.org/info/website/upload/gff.html",".gtf")," file for your genome", a(href="https://github.com/nasqar/GeneidToNameFromGtf","follow these instructions."))
                                                
                                              )
                                      ), 
