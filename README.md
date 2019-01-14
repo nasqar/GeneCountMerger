@@ -6,6 +6,9 @@ This is a simple **preprocessing** tool to merge individual **gene count files**
 
 * * *
 
+#### Online/Demo:
+You can try it online at http://nasqar.abudhabi.nyu.edu/GeneCountMerger
+
 #### **Features**
 
 *   Merge individual sample count files. See **Sample Input Files** below for more details
