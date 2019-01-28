@@ -200,7 +200,7 @@ ui <- tagList(
                                                                        p("Edit the column names so they are of the following format:"),
                                                                        tags$ul(
                                                                          tags$li(strong("sampleName_replicateNumber. Eg: kidneyA_1, kidneyA_2, liver_1, liver_2, etc ...")),
-                                                                         tags$li(strong("do NOT use any special characters in sample names except '-'")),
+                                                                         tags$li(strong("do NOT use any special characters in sample names except underscore'_' to denote replicate numbers")),
                                                                          tags$li(strong("use underscore '_' to denote replicates"))
                                                                        )
                                                                        )
@@ -668,7 +668,7 @@ server <- function(input, output,session) {
     {
       columnNames = colnames(myValues$mergedData)[-1]
       
-      valid =  all(grepl("^[[:alnum:]-]+[_]*[[:digit:]]*$", columnNames, ignore.case = T))
+      valid =  all(grepl("^[[:alnum:]]+[_]*[[:digit:]]*$", columnNames, ignore.case = T))
       return(valid)
       
     }
