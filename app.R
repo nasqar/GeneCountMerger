@@ -194,6 +194,17 @@ ui <- tagList(
                                  hr(),
                                  
                                  conditionalPanel("output.filesMerged",
+                                                  conditionalPanel("!output.columnNamesValid",
+                                                                   div(class = "alert alert-warning",
+                                                                       p(strong("Sample names are NOT valid for use in our analysis apps")),
+                                                                       p("Edit the column names so they are of the following format:"),
+                                                                       tags$ul(
+                                                                         tags$li(strong("sampleName_replicateNumber. Eg: kidneyA_1, kidneyA_2, liver_1, liver_2, etc ...")),
+                                                                         tags$li(strong("do NOT use any special characters in sample names except '-'")),
+                                                                         tags$li(strong("use underscore '_' to denote replicates"))
+                                                                       )
+                                                                       )
+                                                                   ),
                                                   bsCollapse(id="editCols_collapse_panel",multiple = FALSE,
                                                              bsCollapsePanel(title="Edit Column Names",value="editCols_panel", style = "primary",
                                                                   uiOutput("editColumnNamesView")
@@ -278,13 +289,13 @@ server <- function(input, output,session) {
         output[[paste0("textboxColumns",i)]] <- renderUI({
           if(i == 1)
           {
-            column(3,
+            column(4,
                    shinyjs::disabled(textInput(paste0("textboxColumns",i),paste("Column", i),columnNames[i]))
             )
             
           }
           else
-            column(3,
+            column(4,
                    # tags$label( paste("Column", i)),
                    # div(class = "input-group form-group",
                    #     
@@ -523,24 +534,23 @@ server <- function(input, output,session) {
       countsColStartIndex = 3
     }
     
-    mergedColNames = colnames(mergedCountsOnly)
-    
-    containsUnderscoreReplNum= grepl('_[0-9]+$',mergedColNames)
-    if(!all(containsUnderscoreReplNum))
-    {
-      #remove all underscores if present
-      mergedColNames = gsub("_","",mergedColNames)
-      
-      #add underscore 1
-      mergedColNames = paste0(mergedColNames, "_1")
-      
-      startappMergedDf = myValues$mergedData
-      colnames(startappMergedDf)[seq(countsColStartIndex,ncol(startappMergedDf))] = mergedColNames
-      
-      browser()
-      write.csv(startappMergedDf, myValues$startAppFileUrl, row.names = F)
-    }
-    else
+    # mergedColNames = colnames(mergedCountsOnly)
+    # 
+    # containsUnderscoreReplNum= grepl('_[0-9]+$',mergedColNames)
+    # if(!all(containsUnderscoreReplNum))
+    # {
+    #   #remove all underscores if present
+    #   mergedColNames = gsub("_","",mergedColNames)
+    #   
+    #   #add underscore 1
+    #   mergedColNames = paste0(mergedColNames, "_1")
+    #   
+    #   startappMergedDf = myValues$mergedData
+    #   colnames(startappMergedDf)[seq(countsColStartIndex,ncol(startappMergedDf))] = mergedColNames
+    #   
+    #   write.csv(startappMergedDf, myValues$startAppFileUrl, row.names = F)
+    # }
+    # else
       write.csv(myValues$mergedData, myValues$startAppFileUrl, row.names = F)
     
   })
@@ -629,14 +639,13 @@ server <- function(input, output,session) {
       return(geneid2name[geneid2name$gene_id == as.character(x),]$gene_name)
     })
 
-    #browser()
     print(paste(format(Sys.time(), "%H:%M:%OS3"),": Finished renaming"))
     stopCluster(cl)
     
     progress$set(value = 0.8)
     
     flatList = unlist(levelsList)
-    #browser()
+    
     progress$set(value = 1)
     return(flatList)
     
@@ -653,6 +662,19 @@ server <- function(input, output,session) {
     return(!is.null(analyzeDataReactive()))
   })
   outputOptions(output, 'filesMerged', suspendWhenHidden=FALSE)
+  
+  output$columnNamesValid <- reactive({
+    if(!is.null(myValues$mergedData))
+    {
+      columnNames = colnames(myValues$mergedData)[-1]
+      
+      valid =  all(grepl("^[[:alnum:]-]+[_]*[[:digit:]]*$", columnNames, ignore.case = T))
+      return(valid)
+      
+    }
+    return(T)
+  })
+  outputOptions(output, 'columnNamesValid', suspendWhenHidden=FALSE)
   
   
   observe({
