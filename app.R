@@ -260,7 +260,7 @@ ui <- tagList(
 options(shiny.maxRequestSize = 60*1024^2)
 # Define server logic required to draw a histogram ----
 server <- function(input, output,session) {
- 
+  session$onSessionEnded(stopApp)
   
   observe({
     myValues$status = "Upload file(s) first"
@@ -386,7 +386,8 @@ server <- function(input, output,session) {
              )
              ),
     div(style = "clear:both;")
-    ))
+    )
+    )
     
     })
   
@@ -404,6 +405,7 @@ server <- function(input, output,session) {
   output$contents <- renderDataTable({
     # tmp <- analyzeDataReactive()
     # if(!is.null(tmp)) tmp$data
+    
     if(!is.null(myValues$mergedData)) myValues$mergedData
     
   }, options = list(scrollX = TRUE, pageLength = 10))
@@ -510,6 +512,7 @@ server <- function(input, output,session) {
                     
                     updateTabsetPanel(session, "tabs", selected = "Output")
                     
+                    total[,1] = as.character(total[,1])
                     myValues$mergedData = total
                     return(list('data'=total))
                     
@@ -527,6 +530,7 @@ server <- function(input, output,session) {
     
     mergedCountsOnly = myValues$mergedData[,-1]
     countsColStartIndex = 2
+    
     if(class(mergedCountsOnly[,1]) != 'integer')
     {  
       mergedCountsOnly = mergedCountsOnly[,-1]
