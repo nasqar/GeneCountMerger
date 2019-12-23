@@ -118,7 +118,8 @@ ui <- tagList(
                                      tags$li(strong("Transcriptome Analysis (Optional)"), " after merging your counts:", 
                                              tags$ul(
                                                tags$li("Use our ",strong("Seurat Wizard")," to carry out single-cell RNA analysis"),
-                                               tags$li("Use ",strong("DESeq2")," or ",strong("START")," apps to carry out bulk RNA analysis")
+                                               tags$li("Use ",strong("DESeq2Shiny")," or ",strong("START")," apps to carry out bulk RNA analysis"),
+                                               tags$li("If there are ", strong("NO replicates"), ", use DESeq2Shiny app for exploratory analysis")
                                              )
                                              
                                      )
@@ -349,6 +350,7 @@ server <- function(input, output,session) {
     tagList(
     h4(strong("Transcriptome Analysis (Optional):")),
     p("Start your analysis by launching the appropriate application for your data"),
+    p("* If there are ", strong("NO replicates"), ", use DESeq2Shiny app for exploratory analysis"),
     p(strong("Your merged counts data will be automatically loaded")),
     fluidRow(
       column(8, style = "margin-left: 20%;",
@@ -378,7 +380,7 @@ server <- function(input, output,session) {
              
              tags$div(class = "BoxArea3", style = "text-align: center;",
                       p(strong("Bulk RNA")),
-                        a("DESeq2", href=paste0("/deseq2shiny?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;"),
+                        a("DESeq2Shiny", href=paste0("/deseq2shiny?countsdata=", encryptUrlParam(myValues$fileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;"),
                         hr(),
                         a("START", href=paste0("/tsar_nasqar?countsdata=", encryptUrlParam(myValues$startAppFileUrl)), class = "btn btn-success", target = "_blank", style = "width: 100%;")
                    
