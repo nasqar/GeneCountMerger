@@ -1,6 +1,8 @@
 # GeneCountMerger
 
-This is a simple **preprocessing** tool to merge individual **gene count files** (Eg. output count files from htseq)
+- This is a simple **preprocessing** tool to merge individual **gene count files** (Eg. output count files from htseq)
+- This tool is a part of the NASQAR toolbox
+- Pre-print: [NASQAR: A web-based platform for High-throughput sequencing data analysis and visualization](https://doi.org/10.1101/709980)
 
 **NOTE:** first column must contain the genes. If the gene columns do not match in all files, this tool will not work
 
